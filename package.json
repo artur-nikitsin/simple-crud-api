@@ -1,0 +1,27 @@
+{
+  "name": "simple-crud-api",
+  "version": "1.0.0",
+  "description": "task #3",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "eslint": "^8.3.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.4.1",
+    "uuid": "^8.3.2",
+    "webpack": "^5.64.2"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artur-nikitsin/simple-crud-api.git"
+  },
+  "author": "Artur Nikitsin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artur-nikitsin/simple-crud-api/issues"
+  },
+  "homepage": "https://github.com/artur-nikitsin/simple-crud-api#readme"
+}
