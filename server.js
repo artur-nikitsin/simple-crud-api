@@ -5,6 +5,7 @@ const utils = require('./src/utils')
 
 const hostname = 'localhost'
 const port = +process.env.PORT || 3001
+const { endResponse } = utils
 
 const server = http.createServer(function (request, response) {
     try {
@@ -17,12 +18,18 @@ const server = http.createServer(function (request, response) {
                 personController(request, response, parsedUrl)
                 break
             default:
-                response.writeHead(400, { 'Content-Type': 'application/json' })
-                response.end(`Cannot found path: ${splitPath.pathname}`)
+                endResponse({
+                    response,
+                    code: 400,
+                    message: `Cannot found path: ${parsedUrl.pathname}`,
+                })
         }
     } catch (error) {
-        response.writeHead(500, { 'Content-Type': 'application/json' })
-        response.end(`Server error`)
+        endResponse({
+            response,
+            code: 500,
+            message: `Server error: ${error}`,
+        })
     }
 })
 
