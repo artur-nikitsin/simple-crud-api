@@ -20,5 +20,6 @@ To run project open your terminal and execute next steps:
    `npm run start:dev` or `yarn start:dev`
 - for production mode:
     `npm run start:prod` or `yarn start:prod`
-6. To start e2e testing execute:
+
+To start e2e testing execute:
   `npm run e2e-test` or `yarn e2e-test`
