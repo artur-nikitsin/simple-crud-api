@@ -4,7 +4,7 @@ const personController = require('./src/personController')
 const utils = require('./src/utils')
 
 const hostname = 'localhost'
-const port = +process.env.PORT || 3001
+const port = process.env.PORT || 3001
 const { endResponse } = utils
 
 const server = http.createServer(function (request, response) {

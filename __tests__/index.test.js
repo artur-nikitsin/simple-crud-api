@@ -15,11 +15,11 @@ describe('Test server requests scenarios', () => {
     })
 
     const host = 'localhost'
-    const port = 3001
+    const port = process.env.PORT || 3001
     const testPerson = { age: 26, name: 'Artur', hobbies: [] }
-    let testPersonIdafterCreation = ''
+    let testPersonIdAfterCreation = ''
 
-    it('Get all persons. On init equal []', (done) => {
+    it('Test GET method. Get all persons. On init equal []', (done) => {
         const options = {
             host,
             port,
@@ -33,13 +33,13 @@ describe('Test server requests scenarios', () => {
             })
 
             response.on('end', () => {
-                expect(JSON.parse(data)).toEqual([])
+                expect(JSON.parse(data)).toMatchObject([])
                 done()
             })
         }).end()
     })
 
-    it('Post new person and get it in response', (done) => {
+    it('Test POST method. Post new person and get it in response', (done) => {
         const options = {
             host,
             port,
@@ -55,21 +55,24 @@ describe('Test server requests scenarios', () => {
             response.on('end', () => {
                 const testResponse = JSON.parse(data)
                 const { id } = testResponse
-                testPersonIdafterCreation = id
+                testPersonIdAfterCreation = id
                 const withSubstitutedId = { ...testResponse, id: '123' }
 
-                expect(withSubstitutedId).toEqual({ ...testPerson, id: '123' })
+                expect(withSubstitutedId).toMatchObject({
+                    ...testPerson,
+                    id: '123',
+                })
                 done()
             })
         })
         request.write(JSON.stringify(testPerson))
         request.end()
     })
-    it('Get person by id', (done) => {
+    it('Test GET method. Get person by id', (done) => {
         const options = {
             host,
             port,
-            path: `/person/${testPersonIdafterCreation}`,
+            path: `/person/${testPersonIdAfterCreation}`,
             method: 'GET',
         }
         const request = http.request(options, (response) => {
@@ -79,14 +82,81 @@ describe('Test server requests scenarios', () => {
             })
 
             response.on('end', () => {
-                expect(JSON.parse(data)).toEqual({
+                expect(JSON.parse(data)).toMatchObject({
                     ...testPerson,
-                    id: testPersonIdafterCreation,
+                    id: testPersonIdAfterCreation,
                 })
                 done()
             })
         })
         request.write(JSON.stringify(testPerson))
+        request.end()
+    })
+
+    it('Test PUT method. Update person by id', (done) => {
+        const options = {
+            host,
+            port,
+            path: `/person/${testPersonIdAfterCreation}`,
+            method: 'PUT',
+        }
+        const request = http.request(options, (response) => {
+            let data = ''
+            response.on('data', (chunk) => {
+                data += chunk
+            })
+
+            response.on('end', () => {
+                expect(JSON.parse(data)).toMatchObject({
+                    ...testPerson,
+                    name: 'Changed name',
+                    id: testPersonIdAfterCreation,
+                })
+                done()
+            })
+        })
+        request.write(JSON.stringify({ ...testPerson, name: 'Changed name' }))
+        request.end()
+    })
+
+    it('Test DELETE method. Delete person by id', (done) => {
+        const options = {
+            host,
+            port,
+            path: `/person/${testPersonIdAfterCreation}`,
+            method: 'DELETE',
+        }
+        const request = http.request(options)
+
+        request.on('response', (response) => {
+            expect(response.statusCode).toEqual(204)
+            done()
+        })
+        request.end()
+    })
+
+    it('Test GET method. Get person by id, who not exists', (done) => {
+        const options = {
+            host,
+            port,
+            path: `/person/${testPersonIdAfterCreation}`,
+            method: 'GET',
+        }
+        const request = http.request(options, (response) => {
+            let data = ''
+            response.on('data', (chunk) => {
+                data += chunk
+            })
+
+            response.on('end', () => {
+                expect(data).toEqual(`Not found: ${testPersonIdAfterCreation}`)
+            })
+        })
+
+        request.on('response', (response) => {
+            expect(response.statusCode).toEqual(404)
+            done()
+        })
         request.end()
     })
 })
