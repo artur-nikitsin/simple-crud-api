@@ -2,6 +2,7 @@ const http = require('http')
 const url = require('url')
 const personController = require('./src/personController')
 const utils = require('./src/utils')
+require('dotenv').config()
 
 const hostname = 'localhost'
 const port = process.env.PORT || 3001
