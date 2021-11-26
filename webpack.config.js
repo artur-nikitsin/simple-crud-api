@@ -1,11 +1,14 @@
 const path = require('path')
 
 module.exports = {
-    entry: {
-        main: './server.js',
-    },
+    entry: './server.js',
+    mode: 'production',
+    target: 'node',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'my-first-webpack.bundle.js',
+        filename: 'server.bundle.js',
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.json'],
     },
 }

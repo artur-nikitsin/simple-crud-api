@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start:dev": "nodemon --watch",
-    "start:prod": "webpack",
+    "start:prod": "webpack  --config webpack.config.js && node ./dist/server.bundle.js",
     "start": "node server.js",
     "e2e-test": "jest"
   },
