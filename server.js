@@ -5,7 +5,7 @@ const utils = require('./src/utils')
 require('dotenv').config()
 
 const hostname = 'localhost'
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 const { endResponse } = utils
 
 const server = http.createServer(function (request, response) {
