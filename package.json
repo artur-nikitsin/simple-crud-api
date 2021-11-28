@@ -2,17 +2,17 @@
   "name": "simple-crud-api",
   "version": "1.0.0",
   "description": "task #3",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "eslint": "^8.3.0",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.4.1",
     "uuid": "^8.3.2",
     "webpack": "^5.64.2"
   },
   "scripts": {
-    "test": "test"
+    "start:dev": "nodemon --watch",
+    "start:prod": "webpack  --config webpack.config.js && node ./dist/server.bundle.js",
+    "start": "node server.js",
+    "e2e-test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,16 @@
   "bugs": {
     "url": "https://github.com/artur-nikitsin/simple-crud-api/issues"
   },
-  "homepage": "https://github.com/artur-nikitsin/simple-crud-api#readme"
+  "homepage": "https://github.com/artur-nikitsin/simple-crud-api#readme",
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1",
+    "webpack-cli": "^4.9.1"
+  }
 }
